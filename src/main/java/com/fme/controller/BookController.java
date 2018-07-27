@@ -5,10 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fme.bean.Author;
 import com.fme.bean.Book;
@@ -38,13 +35,15 @@ public class BookController {
         return MONTE;
     }
 
-    @RequestMapping("/books")
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/books")
     public Collection<Book> getBooks() {
         return ALL_BOOKS;
 
     }
 
-    @RequestMapping("/book/id/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/book/id/{id}")
     public DetailBook getDetailBook(@PathVariable(value = "id") final String id) {
         if (Strings.isNullOrEmpty(id)) {
             throw new IllegalArgumentException("Le param id ne peut pas être null");
@@ -54,13 +53,24 @@ public class BookController {
         return ((DetailBook) listById.stream().findFirst().orElse(null));
     }
 
-    @RequestMapping("/book/author/{author}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/books/author/{author}")
     public List<Book> getBooksByAuthor(@PathVariable(value = "author") final String author) {
         if (Strings.isNullOrEmpty(author)) {
             throw new IllegalArgumentException("Le param author ne peut pas être null");
         }
         return ALL_BOOKS.stream().filter(book -> book.getAuthor().getLastName().startsWith(author))
                 .collect(Collectors.toList());
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/author")
+    public List<Author> getAuthorByName(@RequestParam(value = "name") final String name) {
+        if (Strings.isNullOrEmpty(name)) {
+            throw new IllegalArgumentException("Le param name ne peut pas être null");
+        }
+        return ALL_BOOKS.stream().filter(book -> book.getAuthor().getLastName().startsWith(name))
+                .map(book -> book.getAuthor()).distinct().collect(Collectors.toList());
     }
 
 }
