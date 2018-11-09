@@ -1,30 +1,11 @@
 package com.fme.dao.impl;
 
-import com.fme.bean.Genre;
 import com.fme.dao.AbstractDao;
-import com.fme.dao.rowmapper.GenreRowMapper;
-import org.springframework.jdbc.core.PreparedStatementCreator;
+import com.fme.dao.GenreDao;
+import com.fme.dbo.Genre;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+@Repository
+public class GenreDaoImpl extends AbstractDao<Genre>  implements GenreDao {
 
-public class GenreDaoImpl extends AbstractDao<GenreRowMapper,Genre> {
-    @Override
-    public List<Genre> findAll() {
-        return null;
-    }
-
-    @Override
-    public PreparedStatementCreator buildInsertPreparedStatementCreator(Genre object) {
-        return null;
-    }
-
-    @Override
-    public String defineSelectByIdQuery() {
-        return null;
-    }
-
-    @Override
-    public void updateObject(Genre object) {
-
-    }
 }

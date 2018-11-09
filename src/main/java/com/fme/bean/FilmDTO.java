@@ -2,7 +2,7 @@ package com.fme.bean;
 
 import java.time.LocalDate;
 
-public class Film extends PrimaryKey {
+public class FilmDTO extends PrimaryKey {
 
     private String filmName;
     private String duration;
@@ -11,7 +11,8 @@ public class Film extends PrimaryKey {
     private String imgPath;
     private String localPath;
 
-    public Film() {
+    public FilmDTO() {
+        //constructor
     }
 
     public String getFilmName() {

@@ -2,14 +2,14 @@ package com.fme.bean;
 
 import com.fme.constant.GenreEnum;
 
-public class Genre extends PrimaryKey{
+public class GenreDTO extends PrimaryKey{
     private GenreEnum name;
 
-    public Genre(GenreEnum name) {
+    public GenreDTO(GenreEnum name) {
         this.name = name;
     }
 
-    public Genre() {
+    public GenreDTO() {
     }
 
     public GenreEnum getName() {

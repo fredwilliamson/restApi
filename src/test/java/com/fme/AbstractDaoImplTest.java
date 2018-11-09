@@ -29,7 +29,7 @@ public abstract class AbstractDaoImplTest  {
     protected static final String ACTOR_NAME="kubrick";
     protected static final DateTimeFormatter FORMATTER=DateTimeFormatter.ofPattern("dd/MM/uuuu");
     protected static final LocalDate RELEASE_YEAR=LocalDate.parse("01/01/1987", FORMATTER);
-    protected static final GenreEnum GENRE=GenreEnum.War;
+    protected static final String GENRE=GenreEnum.War.getValue();
 
     @Autowired
     protected JdbcTemplate jdbcTemplate;
@@ -41,18 +41,15 @@ public abstract class AbstractDaoImplTest  {
         final Object[] filmInsertParam = {FILM_NAME, "2h30", RELEASE_YEAR, "plot", "/fmess/tmp/img.png", "/fmess/tmp/"};
         final Object[] realisatorParam = {REALISATOR_NAME};
         final Object[] actorParam = {ACTOR_NAME};
-        final Object[] genreParam = {GENRE.getValue()};
+        final Object[] genreParam = {GENRE};
         this.jdbcTemplate.update("insert into realisator values (seq_real.nextval,'stan',?);", realisatorParam);
-        this.jdbcTemplate.update("insert into film  values (seq_film.nextval,?,?,?,?,?,?);", filmInsertParam);
-        idFilm = this.jdbcTemplate.queryForObject("select id from film where filmName=?", filmParam, Long.class);
-        idReal = this.jdbcTemplate.queryForObject("select id from realisator where lastName=?", realisatorParam, Long.class);
-        this.jdbcTemplate.update("insert into real2film values(?,?)", preparedStatement -> {
-            preparedStatement.setLong(1, idFilm);
-            preparedStatement.setLong(2, idReal);
-        });
+        this.jdbcTemplate.update("insert into film (id,film_Name,duration,release_Year,plot,img_Path,local_Path)  values (seq_film.nextval,?,?,?,?,?,?);", filmInsertParam);
+        idFilm = this.jdbcTemplate.queryForObject("select id from film where film_Name=?", filmParam, Long.class);
+        idReal = this.jdbcTemplate.queryForObject("select id from realisator where last_Name=?", realisatorParam, Long.class);
+        this.jdbcTemplate.update("insert into real2film values(?,?)", new Object[] {idFilm,idReal});
         this.jdbcTemplate.update("insert into actor values (seq_actor.nextval,'richard',?);", actorParam);
-        idActor = this.jdbcTemplate.queryForObject("select id from actor where lastName=?", actorParam, Long.class);
-        this.jdbcTemplate.update("insert into actor2film values(?,?)", preparedStatement -> {
+        idActor = this.jdbcTemplate.queryForObject("select id from actor where last_Name=?", actorParam, Long.class);
+        this.jdbcTemplate.update("insert into actor2film (idfilm,idactor) values(?,?)", preparedStatement -> {
             preparedStatement.setLong(1, idFilm);
             preparedStatement.setLong(2, idActor);
         });

@@ -1,6 +1,6 @@
 package com.fme.bean;
 
-public class DetailBook extends Book {
+public class DetailBook extends BookDTO {
 
     private String resume;
 
@@ -10,7 +10,7 @@ public class DetailBook extends Book {
 
     private String imgName;
 
-    public DetailBook(Book book, String resume, boolean isStocked, String quantityToCommand, String imgName) {
+    public DetailBook(BookDTO book, String resume, boolean isStocked, String quantityToCommand, String imgName) {
         super(book.getTitle(), book.getPrice(), book.getAuthor(), book.getId());
         this.resume = resume;
         this.isStocked = isStocked;

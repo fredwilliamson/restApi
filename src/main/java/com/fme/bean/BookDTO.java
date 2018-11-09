@@ -1,6 +1,6 @@
 package com.fme.bean;
 
-public class Book {
+public class BookDTO {
     private String title;
 
     private String price;
@@ -9,7 +9,7 @@ public class Book {
 
     private String id;
 
-    public Book(String title, String price, Author author, String id) {
+    public BookDTO(String title, String price, Author author, String id) {
         super();
         this.title = title;
         this.price = price;

@@ -1,7 +1,7 @@
 package com.fme.dao.impl;
 
 import com.fme.AbstractDaoImplTest;
-import com.fme.bean.Actor;
+import com.fme.dbo.Actor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,10 @@ public class ActorDaoImplTest extends AbstractDaoImplTest {
 
     @Test
     public void insertTestOK(){
-        assertNotNull(dao.insertObject(new Actor("alain","delon")));
+        final Actor actor = new Actor();
+        actor.setFirstName("Delon");
+        actor.setLastName("Alain");
+        dao.insert(actor);
     }
 
     @Test

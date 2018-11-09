@@ -1,6 +1,6 @@
 package com.fme.bean;
 
-public class Author extends Person {
+public class Author extends PersonDTO {
 
 
     public Author(String firstName, String lastName) {

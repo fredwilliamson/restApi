@@ -2,27 +2,32 @@ package com.fme.dao.impl;
 
 import com.fme.AbstractDaoImplTest;
 import com.fme.dbo.Film;
+import com.fme.dbo.FilmMaker;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class FilmDaoImplTest extends AbstractDaoImplTest {
+public class FilmMakerDaoImplTest extends AbstractDaoImplTest {
 
     @Autowired
-    private FilmDaoImpl dao;
+    private FilmMakerDaoImpl dao;
 
     @Test
-    public void findUniqueById() {
-        assertNotNull(this.dao.findUniqueById(this.idFilm));
+    public void findAll() {
     }
 
     @Test
-    public void insetFilmTestOK() {
+    public void findUniqueById() {
+    }
+
+    @Test
+    public void insertOkTest() {
         final Film film =new Film();
         film.setFilmName("kick ass");
         film.setDuration("2h30");
@@ -30,34 +35,32 @@ public class FilmDaoImplTest extends AbstractDaoImplTest {
         film.setPlot("it's a plot");
         film.setLocalPath("/fmess/tmp/");
         film.setReleaseYear(RELEASE_YEAR);
-        this.dao.insert(film);
+        final FilmMaker real=new FilmMaker();
+        real.setFirstName("stan");
+        real.setLastName(REALISATOR_NAME);
+        real.setFilms(new ArrayList<>());
+        real.getFilms().add(film);
+        this.dao.insert(real);
         assertNotNull(film.getId());
     }
 
     @Test
-    public void findFilmByNameTestOk() {
-        assertNotNull(this.dao.findFilmByName(FILM_NAME));
+    public void defineSelectByIdQuery() {
     }
 
     @Test
-    public void findFilmsByRealisator() {
-        final List<Film> results =this.dao.findFilmsByRealisator(REALISATOR_NAME);
-        assertNotNull(results);
-        assertTrue(CollectionUtils.isNotEmpty(results));
+    public void updateObject() {
     }
 
     @Test
-    public void findFilmsByReleaseYearTestOk(){
-        final List<Film> results =this.dao.findFilmsByReleaseYear(RELEASE_YEAR);
-        assertNotNull(results);
-        assertTrue(CollectionUtils.isNotEmpty(results));
+    public void findRealisatorsByFilmName() {
+        assertNotNull(this.dao.findFilmMakerByFilmName(FILM_NAME));
     }
 
     @Test
-    public void findFilmsByGenreTestOk(){
-        final List<Film> results =this.dao.findFilmByGenre(GENRE);
+    public void findRealisatorsByName() {
+        List<FilmMaker> results=this.dao.findFilmMakerByName(REALISATOR_NAME);
         assertNotNull(results);
         assertTrue(CollectionUtils.isNotEmpty(results));
     }
-
 }
